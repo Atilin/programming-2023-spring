@@ -2,6 +2,7 @@
 #include <locale.h>
 #include <cmath>
 #include <vector>
+#include <chrono>
 
 using namespace std;
 
@@ -42,7 +43,7 @@ void separation(double A, double B, double N, vector <pair <double, double>>& a)
 	cout << "Число корней: " << counter << endl;
 }
 
-void improvement(double a, double b, double e)
+void bisection(double a, double b, double e)
 {
 	cout << "МЕТОД БИСЕКЦИИ:" << endl;
 	cout << "Начальное приближение к корню: " << (a + b) / 2 << endl;
@@ -65,6 +66,83 @@ void improvement(double a, double b, double e)
 	cout << "Точность: " << (b - a) / 2 << endl;
 	cout << "Количество шагов: " << k << endl;
 	cout << "Абсолютная величина невязки: " << abs(f((a + b) / 2)) << endl;
+}
+
+double f1(double x) // производная
+{
+	return 0.3 - 4 * sin(x);
+}
+
+void newton(double a, double b, double e)
+{
+	cout << "МЕТОД НЬЮТОНА:" << endl;
+
+	double c = (a + b) / 2; // первое приближение
+	cout << "Начальное приближение к корню: " << c << endl;
+
+	double d = c - f(c) / f1(c); // второе приближение
+
+	int k = 2;
+	while (abs(d - c) > e)
+	{
+		c = d;
+		d = c - f(c) / f1(c);
+
+		k++;
+	}
+	cout << "Конечное приближение к корню: " << d << endl;
+	cout << "Точность: " << abs(d - c) << endl;
+	cout << "Количество шагов: " << k << endl;
+	cout << "Абсолютная величина невязки: " << abs(f(d)) << endl;
+}
+
+void newtonMod(double a, double b, double e)
+{
+	cout << "МЕТОД НЬЮТОНА МОДИФИЦИРОВАННЫЙ:" << endl;
+
+	double c = (a + b) / 2; // первое приближение
+	double x0 = c;
+	cout << "Начальное приближение к корню: " << c << endl;
+
+	double d = c - f(c) / f1(c); // второе приближение
+
+	int k = 2;
+	while (abs(d - c) > e)
+	{
+		c = d;
+		d = c - f(c) / f1(x0);
+
+		k++;
+	}
+	cout << "Конечное приближение к корню: " << d << endl;
+	cout << "Точность: " << abs(d - c) << endl;
+	cout << "Количество шагов: " << k << endl;
+	cout << "Абсолютная величина невязки: " << abs(f(d)) << endl;
+}
+
+void secant(double a, double b, double e)
+{
+	cout << "МЕТОД СЕКУЩИХ:" << endl;
+
+	double c = b - (f(b) / (f(b) - f(a))) * (b - a);
+	cout << "Начальное приближение к корню: " << c << endl;
+
+	int k = 1;
+
+
+	while (abs(b - c) > e)
+	{
+		double c_copy = c;
+		c = b - (f(b) / (f(b) - f(c_copy))) * (b - c_copy);
+		b = c_copy;
+
+		k++;
+	}
+
+	cout << "Конечное приближение к корню: " << c << endl;
+	cout << "Точность: " << abs(b - c) << endl;
+	cout << "Количество шагов: " << k << endl;
+	cout << "Абсолютная величина невязки: " << abs(f(c)) << endl;
 }
 
 int main()
@@ -109,14 +187,39 @@ int main()
 		cout << endl;
 	}
 
-	//уточнение корней
+	//уточнение корней, бисекция
 
 	for (int i = 0; i < a.size(); ++i)
 	{
-		cout << i + 1 << " корень:" << endl;
-		improvement(a[i].first, a[i].second, epsilon);
-		cout << endl;
+		cout << "-------------------------------------" << endl;
+		cout << i + 1 << " корень:" << endl << endl;
+
+		auto start = chrono::steady_clock::now();
+		bisection(a[i].first, a[i].second, epsilon);
+		auto end = chrono::steady_clock::now();
+		auto diff = end - start;
+		cout << "Время вычисления: " << chrono::duration <double, milli>(diff).count() << " ms" << endl << endl;
+
+		start = chrono::steady_clock::now();
+		newton(a[i].first, a[i].second, epsilon);
+		end = chrono::steady_clock::now();
+		diff = end - start;
+		cout << "Время вычисления: " << chrono::duration <double, milli>(diff).count() << " ms" << endl << endl;
+
+		start = chrono::steady_clock::now();
+		newtonMod(a[i].first, a[i].second, epsilon);
+		end = chrono::steady_clock::now();
+		diff = end - start;
+		cout << "Время вычисления: " << chrono::duration <double, milli>(diff).count() << " ms" << endl << endl;
+
+		start = chrono::steady_clock::now();
+		secant(a[i].first, a[i].second, epsilon);
+		end = chrono::steady_clock::now();
+		diff = end - start;
+		cout << "Время вычисления: " << chrono::duration <double, milli>(diff).count() << " ms" << endl << endl;
+
 	}
+
 
 	return EXIT_SUCCESS;
 }
