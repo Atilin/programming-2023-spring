@@ -86,6 +86,30 @@ double newton(vector <pair <double, double>> c, int n, double x)
 	return ans;
 }
 
+double lagrange(vector <pair <double, double>> c, int n, double x)
+{
+	double ans = 0;
+
+	for (int k = 0; k <= n; ++k)
+	{
+		double d = 1;
+
+		for (int i = 0; i <= n; ++i)
+		{
+			if (i != k)
+			{
+				d = d * (x - c[i].first) / (c[k].first - c[i].first);
+			}
+		}
+
+		d = d * c[k].second;
+
+		ans = ans + d;
+	}
+
+	return ans;
+}
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -112,28 +136,42 @@ int main()
 	makeChart(a, b, m, chart);
 	printChart(chart);
 
-	cout << endl << "Введите x - точку интерполирования: ";
-	double x = 0;
-	cin >> x;
-
-	cout << endl << "Таблица узлов, отсортированная в порядке удаления от точки интерполирования: ";
-	sortChart(chart, x);
-	printChart(chart);
-
-	cout << endl << "Введите n - степень интерполяционного многочлена: ";
-	int n = 0;
-	cin >> n;
-	while (n > m)
+	bool flag = 1;
+	while (flag == 1)
 	{
-		cout << endl << "Степень интерполяционного многочлена не должна превышать значение m";
-		cout << endl << "Введите n - степень интерполяционного многочлена: ";
-		cin >> n;
-	}
 
-	cout << endl << "Значение интерполяционного многочлена, найденное при помощи представления в форме Ньютона: ";
-	cout << newton(chart, n, x);
-	cout << endl << "Значение абсолютной фактической погрешности для формы Ньютона: ";
-	cout << abs(f(x) - newton(chart, n, x));
+		cout << endl << "Введите x - точку интерполирования: ";
+		double x = 0;
+		cin >> x;
+
+		cout << endl << "Таблица узлов, отсортированная в порядке удаления от точки интерполирования: ";
+		sortChart(chart, x);
+		printChart(chart);
+
+		cout << endl << "Введите n - степень интерполяционного многочлена: ";
+		int n = 0;
+		cin >> n;
+		while (n > m)
+		{
+			cout << endl << "Степень интерполяционного многочлена не должна превышать значение m";
+			cout << endl << "Введите n - степень интерполяционного многочлена: ";
+			cin >> n;
+		}
+
+		cout << endl << "Значение интерполяционного многочлена, найденное при помощи представления в форме Ньютона: ";
+		cout << newton(chart, n, x);
+		cout << endl << "Значение абсолютной фактической погрешности для формы Ньютона: ";
+		cout << abs(f(x) - newton(chart, n, x));
+
+		cout << endl << endl << "Значение интерполяционного многочлена, найденное при помощи представления в форме Лагранжа: ";
+		cout << lagrange(chart, n, x);
+		cout << endl << "Значение абсолютной фактической погрешности для формы Лагранжа: ";
+		cout << abs(f(x) - lagrange(chart, n, x));
+
+		cout << endl << endl << "Желаете ввести новые значения х и n? (1 - Да, 0 - Нет)    ";
+		cin >> flag;
+
+	}
 
 	return EXIT_SUCCESS;
 }
