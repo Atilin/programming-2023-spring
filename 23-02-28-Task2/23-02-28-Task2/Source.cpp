@@ -10,7 +10,10 @@ using namespace std;
 double f(double x)
 {
 	return 2 * sin(x) - x / 2;
+	//return (x - 1.13) * x * x + 2 * x;
 }
+
+
 
 void makeChart(double a, double b, int m, vector <pair <double, double>>& chart)
 {
@@ -25,7 +28,7 @@ void makeChart(double a, double b, int m, vector <pair <double, double>>& chart)
 
 void printChart(vector <pair <double, double>> chart)
 {
-	cout << endl << '\t' << "x:" << '\t' << '\t' << '\t' << "f(x):" << endl;
+	cout << endl << '\t' << "x:" << '\t' << '\t' << '\t' << '\t' << "f(x):" << endl;
 
 	for (int i = 0; i < chart.size(); ++i)
 	{
@@ -54,26 +57,25 @@ void sortChart(vector <pair <double, double>>& c, double x)
 	}
 }
 
+double recursion(vector <pair <double, double>> c, int m, int n)
+{
+	if (n - m == 1)
+	{
+		return (c[n].second - c[m].second) / (c[n].first - c[m].first);
+	}
+	else
+	{
+		return (recursion(c, m + 1, n) - recursion(c, m, n - 1)) / (c[n].first - c[m].first);
+	}
+}
+
 double newton(vector <pair <double, double>> c, int n, double x)
 {
 	double ans = c[0].second;
 
 	for (int i = 1; i <= n; ++i)
 	{
-		double s = 0;
-
-		for (int j = 0; j <= n; ++j)
-		{
-			double d = 1;
-			for (int k = 0; k <= n; ++k)
-			{
-				if (k != j)
-				{
-					d = d * (c[j].first - c[k].first);
-				}
-			}
-			s = s + c[j].second / d;
-		}
+		double s = recursion(c, 0, i);
 
 		for (int j = 0; j < i; ++j)
 		{
@@ -113,7 +115,7 @@ double lagrange(vector <pair <double, double>> c, int n, double x)
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	cout << setprecision(14) << fixed;
+	cout << setprecision(15) << fixed;
 
 	cout << "ЗАДАЧА АЛГЕБРАИЧЕСКОГО ИНТЕРПОЛИРОВАНИЯ";
 	cout << endl << endl << "Вариант 8:   f = 2 * sin(x) - x / 2";
