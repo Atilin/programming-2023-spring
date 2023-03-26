@@ -9,8 +9,8 @@ using namespace std;
 
 double f(double x)
 {
-	return 2 * sin(x) - x / 2 - 0.2;
-	//return sin(x);
+	return 2 * sin(x) - x / 2;
+	//return 0.116 * x * x * (x - 0.033) + 2;
 }
 
 void makeChartReverse(double a, double b, int m, vector <pair <double, double>>& chart)
@@ -109,7 +109,7 @@ void separation(double A, double B, double N, vector <pair <double, double>>& a,
 
 	while (x2 <= B)
 	{
-		y2 = f(x2);
+		y2 = newton(c, n, x2) - F;
 
 		if (y1 * y2 <= 0)
 		{
@@ -129,29 +129,54 @@ void separation(double A, double B, double N, vector <pair <double, double>>& a,
 	cout << "Число корней: " << counter << endl;
 }
 
-void bisection(double a, double b, double e, double x)
+void bisection(double a, double b, double e, vector <pair <double, double>> c, int n, double F)
 {
 	cout << "МЕТОД БИСЕКЦИИ:" << endl;
 	cout << "Начальное приближение к корню: " << (a + b) / 2 << endl;
 	int k = 0;
 	while ((b - a) > 2 * e)
 	{
-		double c = (a + b) / 2;
+		double q = (a + b) / 2;
 
-		if (f(a) * f(c) <= 0)
+		if (newton(c, n, a) * newton(c, n, q) <= 0)
 		{
-			b = c;
+			b = q;
 		}
 		else
 		{
-			a = c;
+			a = q;
 		}
 		k++;
 	}
 	cout << "Конечное приближение к корню: " << (a + b) / 2 << endl;
 	cout << "Точность: " << (b - a) / 2 << endl;
 	cout << "Количество шагов: " << k << endl;
-	cout << "Абсолютная величина невязки: " << abs(f((a + b) / 2)) << endl;
+	cout << "Абсолютная величина невязки: " << abs(f((a + b) / 2) - F) << endl;
+}
+
+void secant(double a, double b, double e, int n, vector <pair <double, double>> c, double F)
+{
+	cout << "МЕТОД СЕКУЩИХ:" << endl;
+
+	double q = b - ((newton(c, n, b) - F) / (newton(c, n, b) - newton(c, n, a))) * (b - a);
+	cout << "Начальное приближение к корню: " << q << endl;
+
+	int k = 1;
+
+
+	while (abs(b - q) > e)
+	{
+		double q_copy = q;
+		q = b - ((newton(c, n, b) - F) / (newton(c, n, b) - newton(c, n, q_copy))) * (b - q_copy);
+		b = q_copy;
+
+		k++;
+	}
+
+	cout << "Конечное приближение к корню: " << q << endl;
+	//cout << "Точность: " << abs(b - q) << endl;
+	cout << "Количество шагов: " << k << endl;
+	cout << "Абсолютная величина невязки: " << abs(f(q) - F) << endl;
 }
 
 int main()
@@ -256,8 +281,11 @@ int main()
 		{
 			cout << "-------------------------------------" << endl;
 			cout << i + 1 << " корень:" << endl << endl;
-			bisection(roots[i].first, roots[i].second, epsilon, x);
+			//bisection(roots[i].first, roots[i].second, epsilon, chart2, n, x);
+			secant(roots[i].first, roots[i].second, epsilon, n, chart2, x);
 		}
+
+
 
 
 
