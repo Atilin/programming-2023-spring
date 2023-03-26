@@ -129,30 +129,30 @@ void separation(double A, double B, double N, vector <pair <double, double>>& a,
 	cout << "Число корней: " << counter << endl;
 }
 
-void bisection(double a, double b, double e, vector <pair <double, double>> c, int n, double F)
-{
-	cout << "МЕТОД БИСЕКЦИИ:" << endl;
-	cout << "Начальное приближение к корню: " << (a + b) / 2 << endl;
-	int k = 0;
-	while ((b - a) > 2 * e)
-	{
-		double q = (a + b) / 2;
-
-		if (newton(c, n, a) * newton(c, n, q) <= 0)
-		{
-			b = q;
-		}
-		else
-		{
-			a = q;
-		}
-		k++;
-	}
-	cout << "Конечное приближение к корню: " << (a + b) / 2 << endl;
-	cout << "Точность: " << (b - a) / 2 << endl;
-	cout << "Количество шагов: " << k << endl;
-	cout << "Абсолютная величина невязки: " << abs(f((a + b) / 2) - F) << endl;
-}
+//void bisection(double a, double b, double e, vector <pair <double, double>> c, int n, double F)
+//{
+//	cout << "МЕТОД БИСЕКЦИИ:" << endl;
+//	cout << "Начальное приближение к корню: " << (a + b) / 2 << endl;
+//	int k = 0;
+//	while ((b - a) > 2 * e)
+//	{
+//		double q = (a + b) / 2;
+//
+//		if (newton(c, n, a) * newton(c, n, q) <= 0)
+//		{
+//			b = q;
+//		}
+//		else
+//		{
+//			a = q;
+//		}
+//		k++;
+//	}
+//	cout << "Конечное приближение к корню: " << (a + b) / 2 << endl;
+//	cout << "Точность: " << (b - a) / 2 << endl;
+//	cout << "Количество шагов: " << k << endl;
+//	cout << "Абсолютная величина невязки: " << abs(f((a + b) / 2) - F) << endl;
+//}
 
 void secant(double a, double b, double e, int n, vector <pair <double, double>> c, double F)
 {
@@ -275,7 +275,7 @@ int main()
 			cout << endl;
 		}
 
-		//уточнение корней, бисекция
+		//уточнение корней
 
 		for (int i = 0; i < roots.size(); ++i)
 		{
