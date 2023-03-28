@@ -10,7 +10,6 @@ using namespace std;
 double f(double x)
 {
 	return 2 * sin(x) - x / 2;
-	//return 0.116 * x * x * (x - 0.033) + 2;
 }
 
 void makeChartReverse(double a, double b, int m, vector <pair <double, double>>& chart)
@@ -24,14 +23,13 @@ void makeChartReverse(double a, double b, int m, vector <pair <double, double>>&
 	}
 }
 
-void makeChart(double a, double b, int m, vector <pair <double, double>>& chart)
+void swapChart(vector <pair <double, double>>& c)
 {
-	for (int i = 0; i < m + 1; ++i)
+	for (int i = 0; i < c.size(); ++i)
 	{
-		pair <double, double> p;
-		p.first = a + (b - a) / m * i;
-		p.second = f(a + (b - a) / m * i);
-		chart.push_back(p);
+		double t = c[i].first;
+		c[i].first = c[i].second;
+		c[i].second = t;
 	}
 }
 
@@ -129,31 +127,6 @@ void separation(double A, double B, double N, vector <pair <double, double>>& a,
 	cout << "Число корней: " << counter << endl;
 }
 
-//void bisection(double a, double b, double e, vector <pair <double, double>> c, int n, double F)
-//{
-//	cout << "МЕТОД БИСЕКЦИИ:" << endl;
-//	cout << "Начальное приближение к корню: " << (a + b) / 2 << endl;
-//	int k = 0;
-//	while ((b - a) > 2 * e)
-//	{
-//		double q = (a + b) / 2;
-//
-//		if (newton(c, n, a) * newton(c, n, q) <= 0)
-//		{
-//			b = q;
-//		}
-//		else
-//		{
-//			a = q;
-//		}
-//		k++;
-//	}
-//	cout << "Конечное приближение к корню: " << (a + b) / 2 << endl;
-//	cout << "Точность: " << (b - a) / 2 << endl;
-//	cout << "Количество шагов: " << k << endl;
-//	cout << "Абсолютная величина невязки: " << abs(f((a + b) / 2) - F) << endl;
-//}
-
 void secant(double a, double b, double e, int n, vector <pair <double, double>> c, double F)
 {
 	cout << "МЕТОД СЕКУЩИХ:" << endl;
@@ -174,7 +147,6 @@ void secant(double a, double b, double e, int n, vector <pair <double, double>> 
 	}
 
 	cout << "Конечное приближение к корню: " << q << endl;
-	//cout << "Точность: " << abs(b - q) << endl;
 	cout << "Количество шагов: " << k << endl;
 	cout << "Абсолютная величина невязки: " << abs(f(q) - F) << endl;
 }
@@ -248,8 +220,7 @@ int main()
 
 		cout << endl << endl << "---------" << endl << "СПОСОБ 2:" << endl << "---------";
 
-		vector <pair <double, double>> chart2;
-		makeChart(a, b, m, chart2);
+		swapChart(chart1);
 
 		double epsilon = 0;
 		cout << "Задайте точность (epsilon): ";
@@ -266,7 +237,7 @@ int main()
 			cout << "Задайте число N деления на отрезки: " << endl;
 			cin >> N;
 
-			separation(a, b, N, roots, chart2, n, x);
+			separation(a, b, N, roots, chart1, n, x);
 			cout << endl;
 
 			cout << "Вас устраивает полученный результат? Если да - введите 1, иначе - 0" << endl;
@@ -281,8 +252,7 @@ int main()
 		{
 			cout << "-------------------------------------" << endl;
 			cout << i + 1 << " корень:" << endl << endl;
-			//bisection(roots[i].first, roots[i].second, epsilon, chart2, n, x);
-			secant(roots[i].first, roots[i].second, epsilon, n, chart2, x);
+			secant(roots[i].first, roots[i].second, epsilon, n, chart1, x);
 		}
 
 
