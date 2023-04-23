@@ -117,7 +117,7 @@ int main()
 	double exact_value0 = f0_i(b) - f0_i(a);
 
 	double left0 = f0(a) * (b - a);
-	cout << "КФ левого прямоугольника: " << left << endl;
+	cout << "КФ левого прямоугольника: " << left0 << endl;
 	cout << "Абсолютная фактическая погрешность КФ левого прямоугольника: " << abs(left0 - exact_value0) << endl;
 
 	double right0 = f0(b) * (b - a);
