@@ -76,6 +76,7 @@ int main()
 
 	cout << "Приближённое вычисление интеграла по составным квадратурным формулам" << endl << endl;
 
+	cout << setprecision(15);
 
 	//cout << "f(x) = sin(x) - x / 2" << endl << endl;
 	cout << "f(x) = e^(2*x)" << endl << endl;
@@ -161,7 +162,7 @@ int main()
 
 
 
-	cout << "ПРОВЕРКА:" << endl << endl;
+	cout << "ТЕСТИРОВАНИЕ НА МНОГОЧЛЕНАХ:" << endl << endl;
 
 
 
@@ -190,7 +191,20 @@ int main()
 
 	double right0 = h * (w0 + f0((a + b) / 2));
 	cout << "СКФ правого прямоугольника: " << right0 << endl;
-	cout << "Абсолютная фактическая погрешность СКФ правого прямоугольника: " << abs(right0 - exact_value0) << endl << endl;
+	cout << "Абсолютная фактическая погрешность СКФ правого прямоугольника: " << abs(right0 - exact_value0) << endl;
+
+	double mid0 = h * q0;
+	cout << "СКФ среднего прямоугольника: " << mid0 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ среднего прямоугольника: " << abs(mid0 - exact_value0) << endl;
+
+	double trapeze0 = h * (z0 + 2 * w0) / 2;
+	cout << "СКФ трапеции: " << trapeze0 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ трапеции: " << abs(trapeze0 - exact_value0) << endl;
+
+	double simpson0 = h * (z0 + 2 * w0 + 4 * q0) / 6;
+	cout << "СКФ Симпсона: " << simpson0 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ Симпсона: " << abs(simpson0 - exact_value0) << endl << endl;
+
 
 
 
@@ -213,13 +227,25 @@ int main()
 	double z1 = 0;
 	z1 = f1(a) + f1(b);
 
+	double left1 = h * (f1(a) + w1);
+	cout << "СКФ левого прямоугольника: " << left1 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ левого прямоугольника: " << abs(left1 - exact_value1) << endl;
+
+	double right1 = h * (w1 + f1((a + b) / 2));
+	cout << "СКФ правого прямоугольника: " << right1 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ правого прямоугольника: " << abs(right1 - exact_value1) << endl;
+
 	double mid1 = h * q1;
 	cout << "СКФ среднего прямоугольника: " << mid1 << endl;
 	cout << "Абсолютная фактическая погрешность СКФ среднего прямоугольника: " << abs(mid1 - exact_value1) << endl;
 
 	double trapeze1 = h / 2 * (z1 + 2 * w1);
 	cout << "СКФ трапеции: " << trapeze1 << endl;
-	cout << "Абсолютная фактическая погрешность СКФ трапеции: " << abs(trapeze1 - exact_value1) << endl << endl;
+	cout << "Абсолютная фактическая погрешность СКФ трапеции: " << abs(trapeze1 - exact_value1) << endl;
+
+	double simpson1 = h * (z1 + 2 * w1 + 4 * q1) / 6;
+	cout << "СКФ Симпсона: " << simpson1 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ Симпсона: " << abs(simpson1 - exact_value1) << endl << endl;
 
 
 
@@ -241,6 +267,22 @@ int main()
 
 	double z2 = 0;
 	z2 = f2(a) + f2(b);
+
+	double left2 = h * (f2(a) + w2);
+	cout << "СКФ левого прямоугольника: " << left2 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ левого прямоугольника: " << abs(left2 - exact_value2) << endl;
+
+	double right2 = h * (w2 + f2((a + b) / 2));
+	cout << "СКФ правого прямоугольника: " << right2 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ правого прямоугольника: " << abs(right2 - exact_value2) << endl;
+
+	double mid2 = h * q2;
+	cout << "СКФ среднего прямоугольника: " << mid2 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ среднего прямоугольника: " << abs(mid2 - exact_value2) << endl;
+
+	double trapeze2 = h / 2 * (z2 + 2 * w2);
+	cout << "СКФ трапеции: " << trapeze2 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ трапеции: " << abs(trapeze2 - exact_value2) << endl;
 
 	double simpson2 = h / 6 * (z2 + 2 * w2 + 4 * q2);
 	cout << "СКФ Симпсона: " << simpson2 << endl;
@@ -267,8 +309,23 @@ int main()
 	double z3 = 0;
 	z3 = f3(a) + f3(b);
 
-	double simpson3 = h / 6 * (z3 + 2 * w3 + 4 * q3);
+	double left3 = h * (f3(a) + w3);
+	cout << "СКФ левого прямоугольника: " << left3 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ левого прямоугольника: " << abs(left3 - exact_value3) << endl;
 
+	double right3 = h * (w3 + f3((a + b) / 2));
+	cout << "СКФ правого прямоугольника: " << right3 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ правого прямоугольника: " << abs(right3 - exact_value3) << endl;
+
+	double mid3 = h * q3;
+	cout << "СКФ среднего прямоугольника: " << mid3 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ среднего прямоугольника: " << abs(mid3 - exact_value3) << endl;
+
+	double trapeze3 = h / 2 * (z3 + 2 * w3);
+	cout << "СКФ трапеции: " << trapeze3 << endl;
+	cout << "Абсолютная фактическая погрешность СКФ трапеции: " << abs(trapeze3 - exact_value3) << endl;
+
+	double simpson3 = h / 6 * (z3 + 2 * w3 + 4 * q3);
 	cout << "СКФ Симпсона: " << simpson3 << endl;
 	cout << "Абсолютная фактическая погрешность СКФ Симпсона: " << abs(simpson3 - exact_value3) << endl << endl << endl << endl;
 

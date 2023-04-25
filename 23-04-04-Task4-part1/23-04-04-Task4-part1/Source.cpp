@@ -111,7 +111,7 @@ int main()
 
 
 
-	cout << "ПРОВЕРКА:" << endl << endl;
+	cout << "ТЕСТИРОВАНИЕ НА МНОГОЧЛЕНАХ:" << endl << endl;
 
 	cout << "f(x) = 5" << endl;
 	double exact_value0 = f0_i(b) - f0_i(a);
@@ -126,28 +126,103 @@ int main()
 
 	double mid0 = f0((b + a) / 2) * (b - a);
 	cout << "КФ среднего прямоугольника: " << mid0 << endl;
-	cout << "Абсолютная фактическая погрешность КФ среднего прямоугольника: " << abs(mid0 - exact_value0) << endl << endl;
+	cout << "Абсолютная фактическая погрешность КФ среднего прямоугольника: " << abs(mid0 - exact_value0) << endl;
+
+	double trapeze0 = (f0(a) + f0(b)) * (b - a) / 2;
+	cout << "КФ трапеции: " << trapeze0 << endl;
+	cout << "Абсолютная фактическая погрешность КФ трапеции: " << abs(trapeze0 - exact_value0) << endl;
+
+	double simpson0 = (f0(a) + 4 * f0((a + b) / 2) + f0(b)) * (b - a) / 6;
+	cout << "КФ Симпсона: " << simpson0 << endl;
+	cout << "Абсолютная фактическая погрешность КФ Симпсона: " << abs(simpson0 - exact_value0) << endl;
+
+	double three_eight0 = (f0(a) / 8 + f0(a + h) * 3 / 8 + f0(a + 2 * h) * 3 / 8 + f0(b) / 8) * (b - a);
+	cout << "КФ 3/8: " << three_eight0 << endl;
+	cout << "Абсолютная фактическая погрешность КФ 3/8: " << abs(three_eight0 - exact_value0) << endl << endl;
+
 
 
 	cout << "f(x) = x-2" << endl;
 	double exact_value1 = f1_i(b) - f1_i(a);
 
+	double left1 = f1(a) * (b - a);
+	cout << "КФ левого прямоугольника: " << left1 << endl;
+	cout << "Абсолютная фактическая погрешность КФ левого прямоугольника: " << abs(left1 - exact_value1) << endl;
+
+	double right1 = f1(b) * (b - a);
+	cout << "КФ правого прямоугольника: " << right1 << endl;
+	cout << "Абсолютная фактическая погрешность КФ правого прямоугольника: " << abs(right1 - exact_value1) << endl;
+
+	double mid1 = f1((b + a) / 2) * (b - a);
+	cout << "КФ среднего прямоугольника: " << mid1 << endl;
+	cout << "Абсолютная фактическая погрешность КФ среднего прямоугольника: " << abs(mid1 - exact_value1) << endl;
+
 	double trapeze1 = (f1(a) + f1(b)) * (b - a) / 2;
 	cout << "КФ трапеции: " << trapeze1 << endl;
-	cout << "Абсолютная фактическая погрешность КФ трапеции: " << abs(trapeze1 - exact_value1) << endl << endl;
+	cout << "Абсолютная фактическая погрешность КФ трапеции: " << abs(trapeze1 - exact_value1) << endl;
+
+	double simpson1 = (f1(a) + 4 * f1((a + b) / 2) + f1(b)) * (b - a) / 6;
+	cout << "КФ Симпсона: " << simpson1 << endl;
+	cout << "Абсолютная фактическая погрешность КФ Симпсона: " << abs(simpson1 - exact_value1) << endl;
+
+	double three_eight1 = (f1(a) / 8 + f1(a + h) * 3 / 8 + f1(a + 2 * h) * 3 / 8 + f1(b) / 8) * (b - a);
+	cout << "КФ 3/8: " << three_eight1 << endl;
+	cout << "Абсолютная фактическая погрешность КФ 3/8: " << abs(three_eight1 - exact_value1) << endl << endl;
+
 
 
 	cout << "f(x) = x ^ 2 + 4 * x + 3" << endl;
 	double exact_value2 = f2_i(b) - f2_i(a);
 
+	double left2 = f2(a) * (b - a);
+	cout << "КФ левого прямоугольника: " << left2 << endl;
+	cout << "Абсолютная фактическая погрешность КФ левого прямоугольника: " << abs(left2 - exact_value2) << endl;
+
+	double right2 = f2(b) * (b - a);
+	cout << "КФ правого прямоугольника: " << right2 << endl;
+	cout << "Абсолютная фактическая погрешность КФ правого прямоугольника: " << abs(right2 - exact_value2) << endl;
+
+	double mid2 = f2((b + a) / 2) * (b - a);
+	cout << "КФ среднего прямоугольника: " << mid2 << endl;
+	cout << "Абсолютная фактическая погрешность КФ среднего прямоугольника: " << abs(mid2 - exact_value2) << endl;
+
+	double trapeze2 = (f2(a) + f2(b)) * (b - a) / 2;
+	cout << "КФ трапеции: " << trapeze2 << endl;
+	cout << "Абсолютная фактическая погрешность КФ трапеции: " << abs(trapeze2 - exact_value2) << endl;
+
 	double simpson2 = (f2(a) + 4 * f2((a + b) / 2) + f2(b)) * (b - a) / 6;
 	cout << "КФ Симпсона: " << simpson2 << endl;
-	cout << "Абсолютная фактическая погрешность КФ Симпсона: " << abs(simpson2 - exact_value2) << endl << endl;
+	cout << "Абсолютная фактическая погрешность КФ Симпсона: " << abs(simpson2 - exact_value2) << endl;
+
+	double three_eight2 = (b - a) * (f2(a) / 8 + f2(a + h) * 3 / 8 + f2(a + 2 * h) * 3 / 8 + f2(b) / 8);
+	cout << "КФ 3/8: " << three_eight2 << endl;
+	cout << "Абсолютная фактическая погрешность КФ 3/8: " << abs(three_eight2 - exact_value2) << endl << endl;
+
 
 
 	cout << "f(x) = x ^ 3 + 7 * x ^ 2 + 4 * x - 1" << endl;
 	double exact_value3 = f3_i(b) - f3_i(a);
 	cout << exact_value3 << endl;
+
+	double left3 = f3(a) * (b - a);
+	cout << "КФ левого прямоугольника: " << left3 << endl;
+	cout << "Абсолютная фактическая погрешность КФ левого прямоугольника: " << abs(left3 - exact_value3) << endl;
+
+	double right3 = f3(b) * (b - a);
+	cout << "КФ правого прямоугольника: " << right3 << endl;
+	cout << "Абсолютная фактическая погрешность КФ правого прямоугольника: " << abs(right3 - exact_value3) << endl;
+
+	double mid3 = f3((b + a) / 2) * (b - a);
+	cout << "КФ среднего прямоугольника: " << mid3 << endl;
+	cout << "Абсолютная фактическая погрешность КФ среднего прямоугольника: " << abs(mid3 - exact_value3) << endl;
+
+	double trapeze3 = (f3(a) + f3(b)) * (b - a) / 2;
+	cout << "КФ трапеции: " << trapeze3 << endl;
+	cout << "Абсолютная фактическая погрешность КФ трапеции: " << abs(trapeze3 - exact_value3) << endl;
+
+	double simpson3 = (f3(a) + 4 * f3((a + b) / 2) + f3(b)) * (b - a) / 6;
+	cout << "КФ Симпсона: " << simpson3 << endl;
+	cout << "Абсолютная фактическая погрешность КФ Симпсона: " << abs(simpson3 - exact_value3) << endl;
 
 	double h3 = (b - a) / 3;
 	double three_eight3 = (b - a) * (f3(a) / 8 + f3(a + h3) * 3 / 8 + f3(a + 2 * h3) * 3 / 8 + f3(b) / 8);
